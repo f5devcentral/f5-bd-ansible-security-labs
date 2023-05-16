@@ -15,10 +15,8 @@
     - name: Say Hello
       condition: event.payload.message == "Ansible Please Block Some IPs"
 
-  ## Define the action we should take should the condition be met
-
       action:
         run_playbook:
           name: f5-playbooks/block-ips-playbook/block-ips.yaml
           # name: f5-playbooks/block-ips-role/block-ips.yaml
-          var_root: event.payload
+          var_root: payload
