@@ -18,5 +18,4 @@
       action:
         run_playbook:
           name: f5-playbooks/block-ips-playbook/block-ips.yaml
-          # name: f5-playbooks/block-ips-role/block-ips.yaml
           var_root: payload

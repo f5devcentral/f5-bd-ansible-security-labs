@@ -4,13 +4,12 @@
   connection: local
   gather_facts: false 
   vars:
-    Blocked_IPs: "{{ event.payload }}"
+    # Blocked_IPs: "{{ event.message }}"
     F5_VIP_Name: VS_WEB
     F5_VIP_Port: "80"
     F5_Admin_Port: "443"
     ASM_Policy_Name: "WAF-POLICY"
     ASM_Policy_File: "/tmp/f5/WAF-POLICY.xml"
-    Block_My_IP: "yes"
     
   tasks:
 
@@ -24,8 +23,7 @@
       validate_certs: "no"
 
   - debug:
-      msg: "This is the IP List {{ Blocked_IPs }}"
-    failed_when: Blocked_IPs is not defined
+      var: event.message
 
 # #Provision BIGIP-ASM
 #   - name: Provision ASM
