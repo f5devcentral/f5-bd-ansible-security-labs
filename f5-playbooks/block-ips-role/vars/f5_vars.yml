@@ -9,7 +9,3 @@ F5_Admin_Port: "443"
 ASM_Policy_Name: "WAF-POLICY"
 ASM_Policy_File: "/tmp/f5/WAF-POLICY.xml"
 Block_My_IP: "yes"
-
-#Blocked IPs Tasks Variables
-Blocked_IPs:
-- 199.199.199.199s

@@ -1,0 +1,6 @@
+---
+
+  - debug:
+      msg: "This is the IP List {{ Blocked_IPs }}"
+    failed_when: Blocked_IPs is not defined
+
