@@ -13,12 +13,11 @@
 
   rules:
     - name: Say Hello
-      condition: event.payload.message == "Ansible is super cool"
+      condition: event.payload.message == "Ansible Please Block Some IPs"
 
   ## Define the action we should take should the condition be met
 
       action:
         run_playbook:
-#          name: awaf-blocking.yaml
-          name: testing-playbooks/say-what.yaml
-	  extra_vars: event.payload.payload
+          name: modify-waf-policy/block-ips.yaml
+          extra_vars: event.payload.payload
