@@ -20,4 +20,4 @@
       action:
         run_playbook:
           name: f5-playbooks/block-ips-role/block-ips.yaml
-          extra_vars: event.payload.payload
+          var_root: event.payload.payload
