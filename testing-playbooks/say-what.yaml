@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: local_system
   connection: local
   tasks:
     - debug:

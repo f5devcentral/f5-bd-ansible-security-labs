@@ -20,4 +20,5 @@
       action:
         run_playbook:
 #          name: awaf-blocking.yaml
-          name: ../testing-playbooks/say-what.yaml
+          name: testing-playbooks/say-what.yaml
+	  extra_vars: event.payload.payload
