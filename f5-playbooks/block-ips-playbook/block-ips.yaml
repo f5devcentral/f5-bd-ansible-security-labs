@@ -26,10 +26,6 @@
   - debug:
       msg: "{{ Blocked_IPs_Events }}"
 
-  - name: Remove Last 2 Chars from object
-    ansible.builtin.set_fact:
-        Blocked_IPs_Events: "{{ Blocked_IPs_Events[:-2] }}"
-
   - name: Create Array from BlockedIPs
     ansible.builtin.set_fact:
         Blocked_IPs: "{{ Blocked_IPs_Events.split(', ') }}"
@@ -68,7 +64,7 @@
     register: Blocked_IP_Valid
     with_items: "{{ Blocked_IPs }}"
     ignore_errors: yes
-    when: Blocked_IPs is defined
+    when: Blocked_IPs is defined and item != ""
     delegate_to: localhost
 
 #Import Additional Disallowed IPs
