@@ -27,7 +27,7 @@
 
   - name: Create Array from BlockedIPs
     ansible.builtin.set_fact:
-        Blocked_IPs: "{{ Blocked_IPs_Events.split(',') }}"
+        Blocked_IPs: "{{ Blocked_IPs_Events.split(', ') }}"
     when: Blocked_IPs_Events is defined
 
   - debug:
