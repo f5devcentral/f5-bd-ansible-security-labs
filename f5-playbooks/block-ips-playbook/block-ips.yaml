@@ -79,7 +79,7 @@
     with_items: "{{ Blocked_IP_Valid.results }}"
     when: Blocked_IPs is defined and item.rc == 1
     delegate_to: localhost
-    
+
 # #Validate Existing URL Addresses
 #   - name: Validate Existing URL Addresses
 #     ansible.builtin.shell: grep 'name="{{ item }}"' {{ ASM_Policy_File }}
@@ -133,6 +133,7 @@
       name: "{{ ASM_Policy_Name }}"
       state: present
     when: Blocked_URLs is defined or Blocked_IPs is defined
+    delegate_to: localhost
 
   - name: Import ASM policy
     f5networks.f5_modules.bigip_asm_policy_import:
@@ -141,6 +142,7 @@
       source: "{{ASM_Policy_Directory}}{{ ASM_Policy_File }}"
       force: yes
     when: Blocked_URLs is defined or Blocked_IPs is defined
+    delegate_to: localhost
 
   - name: Replace a forward action with an ASM action
     f5networks.f5_modules.bigip_policy_rule:
@@ -151,6 +153,7 @@
       - type: enable
         asm_policy: "{{ ASM_Policy_Name }}"
     when: Blocked_URLs is defined or Blocked_IPs is defined
+    delegate_to: localhost
 
   - name: Deploy Draft ASM policy
     f5networks.f5_modules.bigip_policy:
@@ -160,6 +163,7 @@
       rules:
       - rule1
     when: Blocked_URLs is defined or Blocked_IPs is defined
+    delegate_to: localhost
 
 # #Assign ASM Policy to VIP
 #   - name: Modify Existing VS
@@ -188,9 +192,11 @@
       provider: "{{ provider }}"
       name: "{{ ASM_Policy_Name }}"
       active: yes
+    delegate_to: localhost
 
 #Publish ASM Policy via TMSH
   - name: Publish ASM Policy via TMSH
     f5networks.f5_modules.bigip_command:
       commands: "publish asm policy {{ ASM_Policy_Name }}"
       provider: "{{ provider }}"
+    delegate_to: localhost
