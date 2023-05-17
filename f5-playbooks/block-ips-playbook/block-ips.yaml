@@ -204,3 +204,10 @@
       commands: "publish asm policy {{ ASM_Policy_Name }}"
       provider: "{{ provider }}"
     delegate_to: localhost
+
+  - name: Change ASM Policy to Blocking
+    bigip_command:
+      commands:
+      - modify asm policy WAF-POLICY blocking-mode enabled
+      - publish asm policy WAF-POLICY
+      provider: "{{ provider }}"
