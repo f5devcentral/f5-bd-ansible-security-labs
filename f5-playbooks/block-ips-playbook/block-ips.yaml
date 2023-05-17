@@ -9,7 +9,8 @@
     F5_VIP_Port: "80"
     F5_Admin_Port: "443"
     ASM_Policy_Name: "WAF-POLICY"
-    ASM_Policy_File: "/tmp/f5/WAF-POLICY.xml"
+    ASM_Policy_Directory: "/tmp/f5/"
+    ASM_Policy_File: "WAF-POLICY.xml"
 
   tasks:
 
@@ -43,15 +44,21 @@
     register: ASM_Policy
     when: Blocked_URLs is defined or Blocked_IPs is defined
 
+  - name: Create tmp directory if it does not exist
+    ansible.builtin.file:
+      path: "{{ ASM_Policy_Directory }}"
+      state: directory
+      mode: '0755'
+     
 #Output Data to File due to BUG 1390
   - ansible.builtin.copy:
       content: "{{ ASM_Policy.inline_policy }}"
-      dest: "{{ ASM_Policy_File }}"
+      dest: "{{ASM_Policy_Directory}}{{ ASM_Policy_File }}"
     when: Blocked_URLs is defined or Blocked_IPs is defined
 
 #Validate Existing IP Addresses
   - name: Validate Existing IP Addresses
-    ansible.builtin.shell: grep "<ip_address>{{ item }}" {{ ASM_Policy_File }}
+    ansible.builtin.shell: grep "<ip_address>{{ item }}" {{ASM_Policy_Directory}}{{ ASM_Policy_File }}
     register: Blocked_IP_Valid
     with_items: "{{ Blocked_IPs }}"
     ignore_errors: yes
@@ -60,7 +67,7 @@
 #Import Additional Disallowed IPs
   - name: Add Disallowed IPs
     community.general.xml:
-      path: "{{ ASM_Policy_File }}"
+      path: "{{ASM_Policy_Directory}}{{ ASM_Policy_File }}"
       pretty_print: yes
       input_type: xml
       insertafter: yes
@@ -127,7 +134,7 @@
     f5networks.f5_modules.bigip_asm_policy_import:
       provider: "{{provider}}"
       name: "{{ ASM_Policy_Name }}"
-      source: "{{ ASM_Policy_File }}"
+      source: "{{ASM_Policy_Directory}}{{ ASM_Policy_File }}"
       force: yes
     when: Blocked_URLs is defined or Blocked_IPs is defined
 
