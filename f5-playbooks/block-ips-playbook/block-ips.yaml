@@ -24,6 +24,9 @@
       validate_certs: "no"
 
   - debug:
+      msg: "{{ ansible_eda.event }}"
+
+  - debug:
       msg: "{{ Blocked_IPs_Events }}"
 
   - name: Create Array from BlockedIPs
