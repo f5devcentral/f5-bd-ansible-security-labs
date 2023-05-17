@@ -4,13 +4,13 @@
   connection: local
   gather_facts: false 
   vars:
-    # Blocked_IPs: "{{ event.message }}"
+    Blocked_IPs: "{{ ansible_eda.event.payload }}"
     F5_VIP_Name: VS_WEB
     F5_VIP_Port: "80"
     F5_Admin_Port: "443"
     ASM_Policy_Name: "WAF-POLICY"
     ASM_Policy_File: "/tmp/f5/WAF-POLICY.xml"
-    
+
   tasks:
 
   - name: Setup provider
@@ -23,7 +23,7 @@
       validate_certs: "no"
 
   - debug:
-      var: event.message
+      msg: "{{ Blocked_IPs }}"
 
 # #Provision BIGIP-ASM
 #   - name: Provision ASM
