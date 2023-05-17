@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false 
   vars:
-    Blocked_IPs: "{{ ansible_eda.event.payload }}"
+    Blocked_IPs_Events: "{{ ansible_eda.event.payload[:-1] }}"
     F5_VIP_Name: VS_WEB
     F5_VIP_Port: "80"
     F5_Admin_Port: "443"
@@ -21,6 +21,14 @@
       password: "{{ ansible_password }}"
       server_port: "{{ F5_Admin_Port }}"
       validate_certs: "no"
+
+  - debug:
+      msg: "{{ Blocked_IPs_Events }}"
+
+  - name: Create Array from BlockedIPs
+    ansible.builtin.set_fact:
+        Blocked_IPs: "{{ Blocked_IPs_Events.split(',') }}"
+    when: Blocked_IPs_Events is defined
 
   - debug:
       msg: "{{ Blocked_IPs }}"
