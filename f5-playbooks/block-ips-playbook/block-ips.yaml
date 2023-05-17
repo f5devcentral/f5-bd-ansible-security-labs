@@ -49,12 +49,14 @@
       path: "{{ ASM_Policy_Directory }}"
       state: directory
       mode: '0755'
+    delegate_to: localhost
      
 #Output Data to File due to BUG 1390
   - ansible.builtin.copy:
       content: "{{ ASM_Policy.inline_policy }}"
       dest: "{{ASM_Policy_Directory}}{{ ASM_Policy_File }}"
     when: Blocked_URLs is defined or Blocked_IPs is defined
+    delegate_to: localhost
 
 #Validate Existing IP Addresses
   - name: Validate Existing IP Addresses
@@ -63,6 +65,7 @@
     with_items: "{{ Blocked_IPs }}"
     ignore_errors: yes
     when: Blocked_IPs is defined
+    delegate_to: localhost
 
 #Import Additional Disallowed IPs
   - name: Add Disallowed IPs
@@ -75,7 +78,8 @@
       add_children: "<whitelist><ip_address>{{ item.item }}</ip_address><subnet_mask>255.255.255.255</subnet_mask><policy_builder_trusted>false</policy_builder_trusted><ignore_anomalies>false</ignore_anomalies><never_log>false</never_log><block_ip>Always</block_ip><never_learn>false</never_learn><description>blocked</description><ignore_ip_reputation>false</ignore_ip_reputation></whitelist>"
     with_items: "{{ Blocked_IP_Valid.results }}"
     when: Blocked_IPs is defined and item.rc == 1
-
+    delegate_to: localhost
+    
 # #Validate Existing URL Addresses
 #   - name: Validate Existing URL Addresses
 #     ansible.builtin.shell: grep 'name="{{ item }}"' {{ ASM_Policy_File }}
