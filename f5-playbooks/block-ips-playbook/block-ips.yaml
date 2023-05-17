@@ -77,7 +77,7 @@
       xpath: /policy/geolocation
       add_children: "<whitelist><ip_address>{{ item.item }}</ip_address><subnet_mask>255.255.255.255</subnet_mask><policy_builder_trusted>false</policy_builder_trusted><ignore_anomalies>false</ignore_anomalies><never_log>false</never_log><block_ip>Always</block_ip><never_learn>false</never_learn><description>blocked</description><ignore_ip_reputation>false</ignore_ip_reputation></whitelist>"
     with_items: "{{ Blocked_IP_Valid.results }}"
-    when: Blocked_IPs is defined and item.rc == 1
+    when: Blocked_IPs is defined and item != "" and item.rc == 1 
     delegate_to: localhost
 
 # #Validate Existing URL Addresses
