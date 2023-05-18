@@ -34,7 +34,7 @@
         Blocked_IPs: "{{ Blocked_IPs_Events.split(', ') }}"
     when: Blocked_IPs_Events is defined
 
-  - name: Create Array from BlockedIPs
+  - name: Remove Last Object from Array which is empty array object
     ansible.builtin.set_fact:
         Blocked_IPs: "{{ Blocked_IPs[:-1] }}"
     when: Blocked_IPs_Events is defined
