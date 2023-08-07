@@ -24,7 +24,7 @@
       validate_certs: "no"
 
   - debug:
-      msg: "{{ hostvars | to_nice_json }}"
+      msg: "{{ hostvars }}"
       
   - debug:
       msg: "{{ ansible_eda.event }}"
