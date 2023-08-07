@@ -25,6 +25,13 @@
 
   - debug:
       msg: "{{ hostvars }}"
+
+  - debug:
+      msg: "{{ vars }}"
+
+  - debug:
+      msg: "{{ environment }}"
+      
       
   - debug:
       msg: "{{ ansible_eda.event }}"
