@@ -23,6 +23,10 @@
       server_port: "{{ F5_Admin_Port }}"
       validate_certs: "no"
 
+  - name: dump payload
+    debug:
+      var: event.payload
+      
   - debug:
       msg: "{{ hostvars }}"
 
