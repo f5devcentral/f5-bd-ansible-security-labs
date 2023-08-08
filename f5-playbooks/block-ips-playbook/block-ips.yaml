@@ -23,24 +23,13 @@
       server_port: "{{ F5_Admin_Port }}"
       validate_certs: "no"
 
-  - debug:
-      msg: "{{ hostvars }}"
-
-  - debug:
-      msg: "{{ vars }}"
-
-  - debug:
-      msg: "{{ environment }}"
-      
-  - debug:
-      var: ansible_eda.event
-
-  - debug:
-      msg: "{{ Blocked_IPs_Events }}"
+  - name: Blocked IP Events From EDA
+    debug:
+      msg: "{{ Blocked_IPs_Events.payload }}"
 
   - name: Create Array from BlockedIPs
     ansible.builtin.set_fact:
-        Blocked_IPs: "{{ Blocked_IPs_Events.split(', ') }}"
+        Blocked_IPs: "{{ Blocked_IPs_Events.payload.split(', ') }}"
     when: Blocked_IPs_Events is defined
 
   - name: Remove Last Object from Array which is empty array object
