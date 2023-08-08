@@ -23,10 +23,6 @@
       server_port: "{{ F5_Admin_Port }}"
       validate_certs: "no"
 
-  - name: dump payload
-    debug:
-      var: event.payload
-      
   - debug:
       msg: "{{ hostvars }}"
 
@@ -36,9 +32,8 @@
   - debug:
       msg: "{{ environment }}"
       
-      
   - debug:
-      msg: "{{ ansible_eda.event }}"
+      var: ansible_eda.event
 
   - debug:
       msg: "{{ Blocked_IPs_Events }}"
