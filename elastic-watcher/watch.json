@@ -87,7 +87,7 @@
         "params": {},
         "headers": {},
         "body": """{
-			"message": "Ansible Please Turn on AWAF Policy",
+			"message": "Ansible Please Block Some IPs",
 			"payload": "{{ctx.payload._value}}"
 		}"""
       }
